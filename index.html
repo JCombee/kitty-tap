@@ -1,36 +1,96 @@
 <html>
-<head>
+  <head>
     <title>Kitty Tap</title>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 100vw;
-            height: 100vh;
-            background-color: #c19aa0;
-        }
-        .welcome {
-            border-style: solid;
-            border-radius: 30px;
-            overflow: hidden;
-            position: absolute;
-            top: 30vh;
-            left: calc(50vw - 175px);
-            width: 350px;
-        }
-        .welcome img {
-            width: 100%;
-        }
+      :root {
+        --primary-color-50: #fbf1f1;
+        --primary-color-100: #f6e3e3;
+        --primary-color-200: #eec7c6;
+        --primary-color-300: #e5aaaa;
+        --primary-color-400: #dd8e8d;
+        --primary-color-500: #d47271;
+        --primary-color-600: #aa5b5a;
+        --primary-color-700: #7f4444;
+        --primary-color-800: #552e2d;
+        --primary-color-900: #2a1717;
+
+        --secondary-color-50: #eceae9;
+        --secondary-color-100: #dad6d2;
+        --secondary-color-200: #b4ada6;
+        --secondary-color-300: #8f8379;
+        --secondary-color-400: #695a4d;
+        --secondary-color-500: #443120;
+        --secondary-color-600: #36271a;
+        --secondary-color-700: #291d13;
+        --secondary-color-800: #1b140d;
+        --secondary-color-900: #0e0a06;
+
+        --success-color-50: #fef7f5;
+        --success-color-100: #fcefea;
+        --success-color-200: #f9dfd5;
+        --success-color-300: #f7cec0;
+        --success-color-400: #f4beab;
+        --success-color-500: #f1ae96;
+        --success-color-600: #c18b78;
+        --success-color-700: #91685a;
+        --success-color-800: #60463c;
+        --success-color-900: #30231e;
+
+        --danger-color-50: #f0eeef;
+        --danger-color-100: #e1dcdf;
+        --danger-color-200: #c3b9c0;
+        --danger-color-300: #a696a0;
+        --danger-color-400: #887381;
+        --danger-color-500: #6a5061;
+        --danger-color-600: #55404e;
+        --danger-color-700: #40303a;
+        --danger-color-800: #2a2027;
+        --danger-color-900: #151013;
+
+        --warning-color-50: #f7f7ef;
+        --warning-color-100: #eef0de;
+        --warning-color-200: #dee0be;
+        --warning-color-300: #cdd19d;
+        --warning-color-400: #bdc17d;
+        --warning-color-500: #acb25c;
+        --warning-color-600: #8a8e4a;
+        --warning-color-700: #676b37;
+        --warning-color-800: #454725;
+        --warning-color-900: #222412;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 100vw;
+        height: 100vh;
+        background-color: #c19aa0;
+      }
+
+      .welcome {
+        border-style: solid;
+        border-radius: 30px;
+        overflow: hidden;
+        position: absolute;
+        top: 30vh;
+        left: calc(50vw - 175px);
+        width: 350px;
+      }
+
+      .welcome img {
+        width: 100%;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="welcome">
-            <img src="/images/welcome.webp" alt="Welcome">
-        </div>
+      <div class="welcome">
+        <img src="/images/welcome.webp" alt="Welcome" />
+      </div>
     </div>
-</body>
+  </body>
 </html>
