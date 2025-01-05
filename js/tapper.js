@@ -1,7 +1,29 @@
 const template = document.createElement("template");
 template.innerHTML = `
-  Tapped: <span data-tapped></span>
-  <button>Tap me</button>
+  <style>
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    button:active {
+      transform: scale(0.9);
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .tapped {
+      font-size: 2em;
+      margin-bottom: 1em;
+    }
+  </style>
+  <div class="wrapper">
+    <div class="tapped">Tapped: <span data-tapped></span></div>
+    <div><button><img src="${files.images.button}"></button></div>
+  </div>
 `;
 
 class Tapper extends HTMLElement {

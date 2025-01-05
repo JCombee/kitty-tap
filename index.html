@@ -187,11 +187,14 @@
       }
 
       .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
         background-color: var(--color-primary-700);
       }
 
@@ -199,7 +202,7 @@
         background-color: var(--color-primary-800);
       }
 
-      .welcome {
+      .loader {
         border-style: solid;
         border-radius: 30px;
         overflow: hidden;
@@ -209,7 +212,7 @@
         width: 350px;
       }
 
-      .welcome img {
+      .loader img {
         width: 100%;
       }
     </style>
@@ -217,7 +220,7 @@
   <body>
     <div class="container" id="kitty-tap"></div>
     <div class="container" id="kitty-tap-loader">
-      <div class="welcome">
+      <div class="loader">
         <img src="/images/welcome.webp" alt="Welcome" />
       </div>
     </div>

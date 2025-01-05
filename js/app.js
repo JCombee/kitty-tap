@@ -1,6 +1,16 @@
 const template = document.createElement("template");
 template.innerHTML = `
-  <tapper-button tapped="0"></tapper-button>
+  <style>
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+  <div class="wrapper">
+    <tapper-button tapped="0"></tapper-button>
+  <div>
 `;
 
 class App extends HTMLElement {

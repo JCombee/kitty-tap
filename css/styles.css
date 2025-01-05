@@ -17,4 +17,6 @@
   animation-timing-function: ease-in;
 }
 
-
+.wrapper {
+  flex: auto;
+}
