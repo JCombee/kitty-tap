@@ -234,7 +234,9 @@
           styles: "/css/styles.css",
         },
         js: {
-          main: "/js/main.js",
+          boot: "/js/boot.js",
+          application: "/js/application.js",
+          main: "/js/app/main.js",
         },
       };
 
@@ -258,21 +260,19 @@
             isLoaded ? null : loaded,
           ].filter((prm) => prm !== null)
         ).then(() => {
+          // load stylesheets
           Object.values(files.css).forEach((url) => {
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.href = url;
             document.head.appendChild(link);
           });
-          Object.values(files.js).forEach((url) => {
-            fetch(url)
-              .then((response) => response.blob())
-              .then((blob) => {
-                const script = document.createElement("script");
-                script.src = URL.createObjectURL(blob);
-                document.body.appendChild(script);
-              });
-          });
+
+          // load boot module
+          const script = document.createElement("script");
+          script.type = "module";
+          script.src = files.js.boot;
+          document.body.appendChild(script);
         });
       })();
     </script>
