@@ -1,7 +1,7 @@
 import Application from "/js/application.js";
 import Main from "/js/app/main.js";
 
-const app = new Application();
+const app = new Application(kitty);
 
 const modules = [new Main(app)];
 
