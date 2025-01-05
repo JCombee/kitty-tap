@@ -195,7 +195,7 @@
         background-color: var(--color-primary-700);
       }
 
-      .container#loading-overlay {
+      .container#kitty-tap-loader {
         background-color: var(--color-primary-800);
       }
 
@@ -215,8 +215,8 @@
     </style>
   </head>
   <body>
-    <div class="container" id="kitty"></div>
-    <div class="container" id="loading-overlay">
+    <div class="container" id="kitty-tap"></div>
+    <div class="container" id="kitty-tap-loader">
       <div class="welcome">
         <img src="/images/welcome.webp" alt="Welcome" />
       </div>
@@ -235,9 +235,8 @@
           styles: "/css/styles.css",
         },
         js: {
-          boot: "/js/boot.js",
-          application: "/js/application.js",
-          main: "/js/app/main.js",
+          app: "/js/app.js",
+          tapper: "/js/tapper.js",
         },
       };
 
@@ -270,10 +269,12 @@
           });
 
           // load boot module
-          const script = document.createElement("script");
-          script.type = "module";
-          script.src = files.js.boot;
-          document.body.appendChild(script);
+          Object.values(files.js).forEach((url) => {
+            const script = document.createElement("script");
+            script.type = "module";
+            script.src = url;
+            document.body.appendChild(script);
+          });
         });
       })();
     </script>
