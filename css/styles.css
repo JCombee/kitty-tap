@@ -1,0 +1,17 @@
+@keyframes welcome-fade-out-animation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.welcome-fade-out {
+  opacity: 0;
+  animation-name: welcome-fade-out-animation;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+}
+
+

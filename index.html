@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Kitty Tap</title>
@@ -186,8 +187,15 @@
       }
 
       .container {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100vw;
         height: 100vh;
+        background-color: var(--color-primary-700);
+      }
+
+      .container#loading-overlay {
         background-color: var(--color-primary-800);
       }
 
@@ -207,10 +215,66 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="kitty"></div>
+    <div class="container" id="loading-overlay">
       <div class="welcome">
         <img src="/images/welcome.webp" alt="Welcome" />
       </div>
     </div>
+
+    <script>
+      const kitty = document.getElementById("kitty");
+
+      const files = {
+        images: {
+          button:
+            "https://utfs.io/f/Hh14IX2rsFUbJUVUuWrIzkElhRy9qdZTP0iBruoWwnvmHjce",
+        },
+        css: {
+          styles: "/css/styles.css",
+        },
+        js: {
+          main: "/js/main.js",
+        },
+      };
+
+      (function () {
+        let isLoaded = false;
+        const loaded = new Promise((resolve) => {
+          document.addEventListener("DOMContentLoaded", () => {
+            resolve();
+            isLoaded = true;
+          });
+        });
+        Promise.all(
+          [
+            ...Object.keys(files).map((key) => {
+              return Promise.all(
+                Object.values(files[key]).map((url) => {
+                  return fetch(url);
+                })
+              );
+            }),
+            isLoaded ? null : loaded,
+          ].filter((prm) => prm !== null)
+        ).then(() => {
+          Object.values(files.css).forEach((url) => {
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = url;
+            document.head.appendChild(link);
+          });
+          Object.values(files.js).forEach((url) => {
+            fetch(url)
+              .then((response) => response.blob())
+              .then((blob) => {
+                const script = document.createElement("script");
+                script.src = URL.createObjectURL(blob);
+                document.body.appendChild(script);
+              });
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
