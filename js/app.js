@@ -41,7 +41,6 @@ class Context {
     if (stateRaw) {
       this.state = JSON.parse(stateRaw);
     }
-    console.log(this.state);
     this.handleListeners();
   }
 
