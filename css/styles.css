@@ -9,7 +9,7 @@
   }
 }
 
-.welcome-fade-out {
+.loader-fade-out {
   opacity: 0;
   display: none;
   animation-name: welcome-fade-out-animation;

@@ -36,19 +36,22 @@ class Tapper extends HTMLElement {
     this.dataTapped = shadow.querySelector("[data-tapped]");
 
     this.updateTapped(this.getAttribute("tapped"));
-    console.log("tapper");
+    this.eventListeners();
+  }
+
+  connectedCallback() {
+    this.button.addEventListener("click", () => {
+      this.setAttribute("tapped", parseInt(this.getAttribute("tapped")) + 1);
+      window.dispatchEvent(
+        new CustomEvent("kitty-tap-reduce", {
+          detail: { action: "tapped", payload: 1 },
+        })
+      );
+    });
   }
 
   static get observedAttributes() {
     return ["tapped"];
-  }
-
-  connectedCallback() {
-    console.log("Button sss", this.button);
-    this.button.addEventListener("click", () => {
-      console.log("Button clicked");
-      this.setAttribute("tapped", parseInt(this.getAttribute("tapped")) + 1);
-    });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -59,6 +62,13 @@ class Tapper extends HTMLElement {
 
   updateTapped(value) {
     this.dataTapped.textContent = value;
+  }
+
+  eventListeners() {
+    window.addEventListener("kitty-tap-state", (event) => {
+      const { tapped } = event.detail;
+      this.setAttribute("tapped", tapped);
+    });
   }
 }
 
