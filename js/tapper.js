@@ -16,8 +16,13 @@ template.innerHTML = `
       justify-content: center;
     }
     .tapped {
+      width: 100%;
+      text-align: center;
+      padding: 16px;
+      border-radius: 16px;
+      background-color: var(--color-primary-500);
       font-size: 2em;
-      margin-bottom: 1em;
+      margin-bottom: 64px;
     }
   </style>
   <div class="wrapper">
