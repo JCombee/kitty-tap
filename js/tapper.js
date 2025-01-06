@@ -40,18 +40,15 @@ class Tapper extends HTMLElement {
     this.button = shadow.querySelector("button");
     this.dataTapped = shadow.querySelector("[data-tapped]");
 
-    this.updateTapped(this.getAttribute("tapped"));
+    this.updateTapped(window.context.state.tapped);
     this.eventListeners();
   }
 
   connectedCallback() {
+    this.setAttribute("tapped", window.context.state.tapped);
     this.button.addEventListener("click", () => {
       this.setAttribute("tapped", parseInt(this.getAttribute("tapped")) + 1);
-      window.dispatchEvent(
-        new CustomEvent("kitty-tap-reduce", {
-          detail: { action: "tapped", payload: 1 },
-        })
-      );
+      window.context.dispatch("tapped", 1);
     });
   }
 
@@ -70,8 +67,7 @@ class Tapper extends HTMLElement {
   }
 
   eventListeners() {
-    window.addEventListener("kitty-tap-state", (event) => {
-      const { tapped } = event.detail;
+    window.context.addListener(({ tapped }) => {
       this.setAttribute("tapped", tapped);
     });
   }

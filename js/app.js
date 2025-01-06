@@ -21,24 +21,28 @@ class App extends HTMLElement {
     document
       .getElementById("kitty-tap-loader")
       .classList.add("loader-fade-out");
-
-    this.loadState();
-    this.saveStateInterval();
-    this.reduceEventListener();
   }
+}
 
-  connectedCallback() {
-    setTimeout(() => this.dispatchState(), 1);
+class Context {
+  state = { tapped: 0 };
+  listeners = [];
+
+  init() {
+    return new Promise((resolve) => {
+      this.loadState();
+      this.saveStateInterval();
+      resolve();
+    });
   }
 
   loadState() {
     const stateRaw = window.localStorage.getItem("state");
-    if (!stateRaw) {
-      this.state = { tapped: 0 };
-      window.localStorage.setItem("state", JSON.stringify(this.state));
-    } else {
+    if (stateRaw) {
       this.state = JSON.parse(stateRaw);
     }
+    console.log(this.state);
+    this.handleListeners();
   }
 
   saveStateInterval() {
@@ -47,26 +51,30 @@ class App extends HTMLElement {
     }, 1000);
   }
 
-  reduceEventListener() {
-    window.addEventListener("kitty-tap-reduce", (event) => {
-      const oldState = this.state;
-      const { action, payload } = event.detail;
-      switch (action) {
-        case "tapped":
-          this.state = { ...oldState, tapped: oldState.tapped + payload };
-          break;
-      }
-      this.dispatchState();
-    });
+  dispatch(action, payload) {
+    const oldState = this.state;
+    switch (action) {
+      case "tapped":
+        this.state = { ...oldState, tapped: oldState.tapped + payload };
+        break;
+    }
+    this.handleListeners();
   }
 
-  dispatchState() {
-    window.dispatchEvent(
-      new CustomEvent("kitty-tap-state", { detail: this.state })
-    );
+  addListener(listener) {
+    this.listeners.push(listener);
+  }
+
+  handleListeners() {
+    const state = this.state;
+    this.listeners.forEach((listener) => listener(state));
   }
 }
 
+window.context = new Context();
+
 customElements.define("kitty-tap", App);
 
-document.getElementById("kitty-tap").innerHTML = "<kitty-tap></kitty-tap>";
+window.context.init().then(() => {
+  document.getElementById("kitty-tap").innerHTML = "<kitty-tap></kitty-tap>";
+});
