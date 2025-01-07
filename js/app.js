@@ -5,24 +5,25 @@ template.innerHTML = `
       display: flex;
       height: 100vh;
     }
-    .garden {
+    .left {
       width: 30%;
       border-right: solid 3px var(--color-secondary-600);
-      background-color: var(--color-secondary-contrast-600);
     }
-    .tapper {
+    .center {
       flex-grow: 1;
     }
-    .store {
+    .right {
       width: 30%;
       border-left: solid 3px var(--color-secondary-600);
-      background-color: var(--color-secondary-contrast-600);
     }
   </style>
   <div class="wrapper">
-    <kt-garden class="garden"></kt-garden>
-    <kt-tapper tapped="0" class="tapper"></kt-tapper>
-    <kt-store class="store"></kt-store>
+    <kt-garden class="left"></kt-garden>
+    <kt-tapper tapped="0" class="center"></kt-tapper>
+    <div class="right">
+      <kt-store></kt-store>
+      <kt-achievements></kt-achievements>
+    </div>
   <div>
 `;
 
@@ -38,13 +39,19 @@ class App extends HTMLElement {
 }
 
 class Context {
-  state = { tapped: 0 };
+  state = {
+    version: 1,
+    tapped: 0,
+    interesting: 0,
+    recording: { tapped: 0 },
+  };
   listeners = [];
 
   init() {
     return new Promise((resolve) => {
       this.loadState();
       this.saveStateInterval();
+      this.interestingDecayInterval();
       resolve();
     });
   }
@@ -52,9 +59,22 @@ class Context {
   loadState() {
     const stateRaw = window.localStorage.getItem("state");
     if (stateRaw) {
-      this.state = JSON.parse(stateRaw);
+      this.state = this.migrateState(JSON.parse(stateRaw));
     }
     this.handleListeners();
+  }
+
+  migrateState(state) {
+    if (!state.version) {
+      state = {
+        version: 1,
+        tapped: state.tapped,
+        interesting: 0,
+        recording: { tapped: state.tapped },
+      };
+    }
+
+    return state;
   }
 
   saveStateInterval() {
@@ -63,11 +83,32 @@ class Context {
     }, 1000);
   }
 
+  interestingDecayInterval() {
+    setInterval(() => {
+      this.dispatch("decay-interesting");
+    }, 1000);
+  }
+
   dispatch(action, payload) {
     const oldState = this.state;
     switch (action) {
       case "tapped":
-        this.state = { ...oldState, tapped: oldState.tapped + payload };
+        this.state = {
+          ...oldState,
+          tapped: oldState.tapped + payload,
+          interesting:
+            oldState.interesting + payload > 100
+              ? 100
+              : oldState.interesting + payload,
+          recording: { tapped: oldState.recording.tapped + payload },
+        };
+        break;
+      case "decay-interesting":
+        this.state = {
+          ...oldState,
+          interesting:
+            oldState.interesting - 5 < 0 ? 0 : oldState.interesting - 5,
+        };
         break;
     }
     this.handleListeners();

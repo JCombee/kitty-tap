@@ -149,7 +149,7 @@ class Tapper extends HTMLElement {
   }
 
   updateTapped(value) {
-    this.dataTapped.textContent = value;
+    this.dataTapped.textContent = Intl.NumberFormat().format(value);
   }
 
   eventListeners() {

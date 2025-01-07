@@ -18,11 +18,11 @@ template.innerHTML = `
     }
   </style>
   <div class="wrapper">
-    <div class="header">Store</div>
+    <div class="header">Achievements</div>
   <div>
 `;
 
-class Store extends HTMLElement {
+class Achievements extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
@@ -30,4 +30,4 @@ class Store extends HTMLElement {
   }
 }
 
-customElements.define("kt-store", Store);
+customElements.define("kt-achievements", Achievements);
