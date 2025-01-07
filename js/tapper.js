@@ -27,7 +27,7 @@ template.innerHTML = `
   </style>
   <div class="wrapper">
     <div class="tapped">Tapped: <span data-tapped></span></div>
-    <div><button><img src="${files.images.button}"></button></div>
+    <div><button><img src="${files.images.button}" draggable="false"></button></div>
   </div>
 `;
 
