@@ -3,13 +3,26 @@ template.innerHTML = `
   <style>
     .wrapper {
       display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
+    }
+    .garden {
+      width: 30%;
+      border-right: solid 3px var(--color-secondary-600);
+      background-color: var(--color-secondary-contrast-600);
+    }
+    .tapper {
+      flex-grow: 1;
+    }
+    .store {
+      width: 30%;
+      border-left: solid 3px var(--color-secondary-600);
+      background-color: var(--color-secondary-contrast-600);
     }
   </style>
   <div class="wrapper">
-    <tapper-button tapped="0"></tapper-button>
+    <kt-garden class="garden"></kt-garden>
+    <kt-tapper tapped="0" class="tapper"></kt-tapper>
+    <kt-store class="store"></kt-store>
   <div>
 `;
 
@@ -72,8 +85,8 @@ class Context {
 
 window.context = new Context();
 
-customElements.define("kitty-tap", App);
+customElements.define("kt-app", App);
 
 window.context.init().then(() => {
-  document.getElementById("kitty-tap").innerHTML = "<kitty-tap></kitty-tap>";
+  document.getElementById("kitty-tap").innerHTML = "<kt-app></kt-app>";
 });

@@ -11,12 +11,13 @@ template.innerHTML = `
     }
     .wrapper {
       display: flex;
+      height: 100%;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
     .tapped {
-      width: 100%;
+      width: 364px;
       text-align: right;
       padding-top: 16px;
       padding-bottom: 16px;
@@ -158,4 +159,4 @@ class Tapper extends HTMLElement {
   }
 }
 
-customElements.define("tapper-button", Tapper);
+customElements.define("kt-tapper", Tapper);
